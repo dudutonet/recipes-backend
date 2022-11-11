@@ -5,8 +5,9 @@ class RecipeModel (database.Model):
     __tablename__ = 'recipes'
     id = database.Column(database.Integer, primary_key = True)
     name = database.Column(database.String(50))
-    email = database.Column(database.String(50)) #database.Float(precision=1)
-    duration = database.Column(database.Integer)
+    description = database.Column(database.String(5000)) #database.Float(precision=1)
+    cook_time = database.Column(database.Integer)
+    revenue = database.Column(database.Integer)
 
     def __init__(self, id, name, rating, duration):
         self.id = id

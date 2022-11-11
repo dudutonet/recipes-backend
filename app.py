@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Api
-from resources.movies import Movies, Movie
+from resources.recipes import Recipes, Recipe
 from resources.users import User, UserLogin
 from flask_jwt_extended import JWTManager
 
