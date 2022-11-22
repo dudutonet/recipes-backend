@@ -8,6 +8,7 @@ class UserModel (database.Model):
     user_id = database.Column(database.Integer, primary_key = True)
     login = database.Column(database.String(50))
     password = database.Column(database.String(50))
+    email = database.Column(database.String(100))
 
     def __init__(self, user_id, login, password):
         self.user_id = user_id

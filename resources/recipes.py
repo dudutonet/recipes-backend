@@ -52,3 +52,4 @@ class Movie(Resource):
             movie.delete_movie()
             return {'message' : 'Movie deleted.'}
         return {'message' : 'movie not founded'}, 204
+    
