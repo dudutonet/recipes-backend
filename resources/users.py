@@ -22,7 +22,7 @@ class User(Resource):
         return {'message' : 'user not founded'}, 204
 
     def post(self, user_id):
-        if UserModel.find_user_by_login(dados['login']):
+        if UserModel.find_user_by_email(dados['login']):
             return {'message':'Login {} already exists'.format(dados['login'])}, 200
 
         user_id = UserModel.find_last_user()
@@ -42,7 +42,7 @@ class UserLogin(Resource):
     @classmethod
     def post(cls):
         dados = minha_requisicao.parse_args()
-        user = UserModel.find_user_by_login(dados['login'])
+        user = UserModel.find_user_by_email(dados['login'])
 
         if user and user.password == dados['password']:
             token_acesso = create_access_token(identity=user.user_id)
