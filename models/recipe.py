@@ -3,35 +3,39 @@ from sql_alchemy import database
 class RecipeModel (database.Model):
     
     __tablename__ = 'recipes'
-    id = database.Column(database.Integer, primary_key = True)
+    recipe_id = database.Column(database.Integer, primary_key = True)
     name = database.Column(database.String(50))
     description = database.Column(database.String(4000))
-    howToMake = database.Column(database.String(6000))
-    cook_time = database.Column(database.Integer)
+    how_to_make = database.Column(database.String(6000))
+    cook_time = database.Column(database.String(50))
     revenue = database.Column(database.Integer)
-    user_id = database.Column('user_id', database.Integer, database.ForeignKey('users.user_id'), primary_key=True)
+    photo_url = database.Column(database.String(1000))
+    user_id = database.Column('user_id', database.Integer, database.ForeignKey('users.user_id'))
 
-    def __init__(self, id, name, description, howToMake, cook_time, revenue, user):
-        self.id = id
+    def __init__(self, recipe_id, name, description, how_to_make, cook_time, revenue, photo_url, user):
+        self.recipe_id = recipe_id
         self.name = name
         self.description = description
-        self.howToMake = howToMake
+        self.how_to_make = how_to_make
         self.cook_time = cook_time
         self.revenue = revenue
-        self.user = user
+        self.photo_url = photo_url
+        self.user_id = user
 
-    def json(self):
-        return {'id' : self.id,
+    def json(self, ingredients = []):
+        return {'id' : self.recipe_id,
         'name' : self.name,
         'description' : self.description,
-        'howToMake' : self.howToMake,
-        'cook_time' : self.cook_time, 
+        'howToMake' : self.how_to_make,
+        'cookTime' : self.cook_time, 
         'revenue' : self.revenue,
-        'user' : self.user}
+        'user' : self.user_id,
+        'photoUrl': self.photo_url
+    }
 
     @classmethod  
     def find_recipe_by_id(cls, id):
-        recipe = cls.query.filter_by(id = id).first()
+        recipe = cls.query.filter_by(recipe_id = id).first()
         if recipe:
             return recipe
         return None
@@ -40,13 +44,13 @@ class RecipeModel (database.Model):
         database.session.add(self)
         database.session.commit()
 
-    def update_recipe(self, name, description, howToMake, cook_time, revenue, user):
+    def update_recipe(self, name, description, howToMake, cookTime, revenue, photoUrl):
         self.name = name
         self.description = description 
-        self.howToMake = howToMake
-        self.cook_time = cook_time        
+        self.how_to_make = howToMake
+        self.cook_time = str(cookTime)       
         self.revenue = revenue 
-        self.user = user
+        self.photo_url = photoUrl
 
     def delete_recipe(self): 
         database.session.delete(self)
@@ -55,8 +59,8 @@ class RecipeModel (database.Model):
 
     @classmethod
     def find_last_recipe(cls):        
-        id = database.engine.execute("select max('id') as new_id from recipes").fetchone() 
+        id = database.engine.execute("select max(recipe_id) as new_id from recipes").fetchone() 
         
-        if id:
-            return id['new_id'] + 1
+        if id[0]:
+            return int(id[0]) + 1
         return 1

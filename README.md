@@ -4,6 +4,9 @@ This code grants the possibility to explore the world of recipes from every coun
 
 ## Install
 
+On winsowns open cmd and execute activate.bat and run ```python app.py``` 
+
+On linux execute this commands:
 - python -m venv env 
 - env/Scripts/activate.bat
 - python -m pip install --upgrade pip

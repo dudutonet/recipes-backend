@@ -9,7 +9,7 @@ from resources.users import User, UserLogin
 app = Flask(__name__)
 api = Api(app)
 jwt = JWTManager(app)
-cors = CORS(app)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 # conexão com mysql
 DATABASE_URI = 'mysql+pymysql://root@localhost/recipes?charset=utf8mb4'
@@ -27,8 +27,8 @@ app.config['JWT_SECRET_KEY'] = 'Senai2022'
 def create_database():
     database.create_all()
 
-api.add_resource(Recipe, '/recipes')
-api.add_resource(Recipes, '/recipes/<int:id>')
+api.add_resource(Recipe, '/recipes/<int:id>')
+api.add_resource(Recipes, '/recipes')
 api.add_resource(User, '/users/<int:id>')
 api.add_resource(UserLogin, '/login')
 
