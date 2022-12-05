@@ -7,10 +7,9 @@ class IngredientModel (database.Model):
     name = database.Column(database.String(50));
     quantity = database.Column(database.Integer);
     unit = database.Column(database.String(15));
-    recipe_id = database.Column('recipe_id', database.Integer, database.ForeignKey('recipes.recipe_id'))
+    recipe_id = database.Column('recipe_id', database.Integer, database.ForeignKey('recipes.recipe_id', ondelete='CASCADE'))
 
     def __init__(self, ingredient_id, name, quantity, unit, recipe_id):
-        print('dentro')
         self.ingredient_id = ingredient_id
         self.name = name
         self.quantity = quantity

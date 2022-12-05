@@ -3,7 +3,7 @@ from flask_jwt_extended import JWTManager
 from flask_restful import Api
 from flask_cors import CORS
 
-from resources.recipes import Recipe, Recipes
+from resources.recipes import Recipe, Recipes, MyRecipes
 from resources.users import User, UserLogin
 
 app = Flask(__name__)
@@ -29,6 +29,7 @@ def create_database():
 
 api.add_resource(Recipe, '/recipes/<int:id>')
 api.add_resource(Recipes, '/recipes')
+api.add_resource(MyRecipes, '/myRecipes')
 api.add_resource(User, '/users/<int:id>')
 api.add_resource(UserLogin, '/login')
 
