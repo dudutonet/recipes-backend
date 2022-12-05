@@ -1,33 +1,29 @@
 from sql_alchemy import database
 from sqlalchemy.sql.expression import func
 
-
 class UserModel (database.Model):
     
     __tablename__ = 'users'
     user_id = database.Column(database.Integer, primary_key = True)
-    email = database.Column(database.String(50))
-    cell_phone = database.Column(database.String(20))
+    login = database.Column(database.String(50), unique=True)
+    email = database.Column(database.String(50), unique=True)
     password = database.Column(database.String(50))
     photo_url = database.Column(database.String(500))
-    user_type = database.Column(database.String(15))
-    created_date = database.Culumn(database.DateTime)
-    updated_date = database.Culumn(database.DateTime)
 
-    def __init__(self, user_id, email, cell_phone, user_type, password):
+    def __init__(self, user_id, login, email, password, photoUrl = ""):
         self.user_id = user_id
+        self.login = login
         self.email = email
-        self.cell_phone = cell_phone
-        self.user_type = user_type
         self.password = password
+        self.photo_url = photoUrl
 
     def json(self):
         return {
-            'user_id' : self.user_id,
+            'userId' : self.user_id,
+            'login' : self.login,
             'email' : self.email,
-            'cell_phone': self.cell_phone,
-            'user_type': self.user_type,
-            
+            'password': self.password,
+            'photoUrl': self.photo_url
         }
 
     @classmethod  
@@ -38,8 +34,8 @@ class UserModel (database.Model):
         return None
 
     @classmethod  
-    def find_user_by_email(cls, email): 
-        user = cls.query.filter_by(email = email).first()
+    def find_user_by_login(cls, login): 
+        user = cls.query.filter_by(login = login).first()
         if user:
             return user
         return None
@@ -48,11 +44,12 @@ class UserModel (database.Model):
         database.session.add(self)
         database.session.commit()
 
-    def update_user(self, user_id, email, cell_phone, password): 
+    def update_user(self, user_id, login, email, password, photo_url): 
         self.user_id = user_id
+        self.loging = login
         self.email = email
-        self.cell_phone = cell_phone
         self.password = password
+        self.photo_url = photo_url
 
     def delete_user(self): 
         database.session.delete(self)
@@ -60,7 +57,6 @@ class UserModel (database.Model):
         
     @classmethod
     def find_last_user(cls):
-        # user_id = database.engine.execute("select nextval('user_id') as new_id").fetchone() - postgres
         user_id = database.session.query(func.max(cls.user_id)).one()[0]
 
         if user_id:

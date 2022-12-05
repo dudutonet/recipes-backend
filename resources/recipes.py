@@ -1,55 +1,67 @@
 from flask_restful import Resource, reqparse
-from models.recipe import MovieModel
-from flask_jwt_extended import jwt_required
+from models.recipe import RecipeModel
+from models.ingredient import IngredientModel
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
-class Movies(Resource):
+my_request = reqparse.RequestParser()
+my_request.add_argument('id', type=str, required=True, help="login is required")
+my_request.add_argument('name', type=str, required=True, help="email is required")
+my_request.add_argument('description', type=str, required=True, help="Descriotion is required")
+my_request.add_argument('howToMake', type=str, required=True, help="How to make is required")
+my_request.add_argument('cookTIme', type=str, required=False, help="password is required")
+my_request.add_argument('photoUrl', type=str, required=True, help="photo is required")
+my_request.add_argument('ingredients', type=list, required=True, help="Ingredients are required")
+
+class Recipes(Resource):
     def get(self):
-        return {'movies' : [movie.json() for movie in MovieModel.query.all()]}
+        return {'recipes' : [recipe.json() for recipe in RecipeModel.query.all()]}
 
+class Recipe(Resource):
 
-class Movie(Resource):
-    minha_requisicao = reqparse.RequestParser()
-    minha_requisicao.add_argument('name', type=str, required=True, help="name is required")
-    minha_requisicao.add_argument('rating')
-    minha_requisicao.add_argument('duration', type=int, required=True, help="duration is required")
-
-    @jwt_required()
     def get(self, id):
-        movie = MovieModel.find_movie_by_id(id)
-        if movie: #if movie is not None
-            return movie.json()
-        return {'message':'movie not found'}, 200 # or 204
+        recipe = RecipeModel.find_recipe_by_id(id)
+        if recipe:
+            return recipe.json()
+        return {'message':'recipe not found'}, 200
 
     @jwt_required()
     def post(self, id):
-        movie_id = MovieModel.find_last_movie()
-        dados = Movie.minha_requisicao.parse_args()
-        new_movie = MovieModel(movie_id, **dados)
+        recipe_id = RecipeModel.find_last_recipe()
+        dados = Recipe.my_request.parse_args()
+        new_recipe = RecipeModel(recipe_id, **dados)
         
         try:
-            new_movie.save_movie()
+            new_recipe.user = get_jwt_identity()
+            new_recipe.save_recipe()
+            for ingredient in dados['ingredients']:
+                ingredient_id = IngredientModel.find_last_ingredient()
+                new_ingredient = IngredientModel(ingredient_id, **ingredient)
+                new_ingredient.save_ingredient()
         except:
             return {'message':'An internal error ocurred.'}, 500
 
-        return new_movie.json(), 201
+        return new_recipe.json(), 201
 
+    @jwt_required()
     def put(self, id):
-        dados = Movie.minha_requisicao.parse_args()
-        movie = MovieModel.find_movie_by_id(id)
-        if movie:
-            movie.update_movie(**dados)
-            movie.save_movie()
-            return movie.json(), 200
+        dados = Recipe.my_request.parse_args()
+        recipe = RecipeModel.find_recipe_by_id(id)
+        if recipe:
+            recipe.update_recipe(**dados)
+            recipe.save_recipe()
+            return recipe.json(), 200
 
-        movie_id = MovieModel.find_last_movie()
-        new_movie = MovieModel(movie_id, **dados)
-        new_movie.save_movie()
-        return new_movie.json(), 201
+        recipe_id = RecipeModel.find_last_recipe()
+        new_recipe = RecipeModel(recipe_id, **dados)
+        new_recipe.save_recipe()
+        
+        return new_recipe.json(), 201
 
+    @jwt_required()
     def delete(self, id):
-        movie = MovieModel.find_movie_by_id(id)
-        if movie:
-            movie.delete_movie()
-            return {'message' : 'Movie deleted.'}
-        return {'message' : 'movie not founded'}, 204
+        recipe = RecipeModel.find_recipe_by_id(id)
+        if recipe:
+            recipe.delete_recipe()
+            return {'message' : 'Recipe deleted.'}
+        return {'message' : 'recipe not founded'}, 204
     

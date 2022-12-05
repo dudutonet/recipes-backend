@@ -9,7 +9,7 @@ class RecipeModel (database.Model):
     howToMake = database.Column(database.String(6000))
     cook_time = database.Column(database.Integer)
     revenue = database.Column(database.Integer)
-    user = database.Column(database.String(50))
+    user_id = database.Column('user_id', database.Integer, database.ForeignKey('users.user_id'), primary_key=True)
 
     def __init__(self, id, name, description, howToMake, cook_time, revenue, user):
         self.id = id
@@ -30,9 +30,8 @@ class RecipeModel (database.Model):
         'user' : self.user}
 
     @classmethod  
-    def find_recipe_by_id(cls, id): #metodo de classe, mesmo que chamar Recipe.query
-        
-        recipe = cls.query.filter_by(id = id).first() # select * from movie where id = 1
+    def find_recipe_by_id(cls, id):
+        recipe = cls.query.filter_by(id = id).first()
         if recipe:
             return recipe
         return None
@@ -41,7 +40,7 @@ class RecipeModel (database.Model):
         database.session.add(self)
         database.session.commit()
 
-    def update_recipe(self, name, description, howToMake, cook_time, revenue, user): #metodo de classe, 
+    def update_recipe(self, name, description, howToMake, cook_time, revenue, user):
         self.name = name
         self.description = description 
         self.howToMake = howToMake
@@ -55,40 +54,9 @@ class RecipeModel (database.Model):
     
 
     @classmethod
-    def find_last_recipe(cls):
-        # movie_id = database.engine.execute("select nextval('movie_id') as new_id").fetchone() - postgres
-        
-        id = database.engine.execute("select max('id') as new_id from recipes").fetchone() # adaptação para o mysql, vamos utilizar o campo autoincremento no futuro
+    def find_last_recipe(cls):        
+        id = database.engine.execute("select max('id') as new_id from recipes").fetchone() 
         
         if id:
             return id['new_id'] + 1
         return 1
-
-class Recipe(database.Model):
-    
-    __tablename__ = 'recipes'
-    id = database.Column(database.Integer, primary_key = True)
-    name = database.Column(database.String(50))
-    description = database.Column(database.String(4000))
-    howToMake = database.Column(database.String(6000))
-    cook_time = database.Column(database.Integer)
-    revenue = database.Column(database.Integer)
-    user = database.Column(database.String(50))
-    user = database.relationship('User', passive_deletes=True)
-    user_id = database.Column(database.Integer(),database.ForeignKey("users.id"))
-
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-    def get_id(self):
-        return self.username
-
-    def get_role(self):
-        return self.user
-
- # Define the Role data-model
-class User(db.Model):
-        __tablename__ = 'roles'
-        id = db.Column(db.Integer(), primary_key=True)
-        name = db.Column(db.String(50), unique=True)
