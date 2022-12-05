@@ -4,9 +4,6 @@ This code grants the possibility to explore the world of recipes from every coun
 
 ## Install
 
-On winsowns open cmd and execute activate.bat and run ```python app.py``` 
-
-On linux execute this commands:
 - python -m venv env 
 - env/Scripts/activate.bat
 - python -m pip install --upgrade pip
@@ -58,3 +55,67 @@ On linux execute this commands:
 	### Rendimento:
 		Em torno de 600g.
 
+	## Carbonara
+
+	### Ingredientes:
+		- 3 ovos (receita para duas pessoas, pode ser adicionado uma gema por pessoa a mais);
+		- Bacon (com um pouco de gordura) 80g;
+		- Sal;
+		- Pimenta do reino moída (pode usar pimenta branca se não quiser ela aparente);
+		- 200g de macarrão espaguetti (pode ser qualquer um, adicionar mais 100g de massa por pessoa);
+		- Um queijo mais rígido, que derreta bem (a receita original é com pecorino, recomendo parmesão ralado fresco).
+	
+	### Ferramentas:
+		- Frigideira grande (ou panela larga);
+		- Panela para o macarrão;
+		- Escorredor (é opcional, pois você pode ir puxando o macarrão direto da panela com um pegador, isso já irá caregar água da cocção e engrossará o molho).
+	
+	### Modo de preparo:
+		1. Começar ralando o queijo, com a face mais fina do ralador;
+		
+		2. Depois, separe um ovo inteiro e as duas gemas dos outros ovos (descarte a clara, ou guarde para o omelete fit);
+		
+		3. Junte o queijo com a mistura de ovos, adicione pimenta do reino moída, na hora se possível, essa mistura precisa ficar homogenea e a pimenta bem presente;
+		
+		4. Colocar a água para ferver agora, adicionar duas colheres de sopa (rasas) de sal, SOMENTE APÓS COMEÇAR FERVER;
+
+		5. Cortar o bacon em cubinhos (de 0,5cm a 1cm) e fritá-los, essa parte já na panela larga ou frigideira grande;
+		
+		6. Colocar a massa na água e retirar a mesma al dente ou um pouco antes até;
+		
+		7. Transferir o macarrão para a frigideira, adicionar a mistura de OQP (Ovos, Queijo e Pimenta) e misturar tudo muito bem;
+
+		8. Para atingir o ponto aveludado, não pode ligar fogo novamente, usar somente a temperatura dos ingredientes. Se usar muito calor o ovo vira omelete, precisa ser cozido aos
+		poucos para emulsionar. Então você pode usar a água do macarrão para diluir a mistura OQP.
+
+	### Rendimento:
+		Em torno de 500g.
+	
+	## Delícia de Uva
+
+	### Ingredientes:
+		- 1 lata de leite condensado (se usar o semidesnatado não dá tão certo);
+		- 4 colheres de sopa bem cheias de leite em pó (aquele que custa caro é o top, mas o tirol quebra o galho);
+		- 3 caixinhas de creme de leite, aquele simplão e baratão;
+		- 2 barras de chocolate, uma ao leite e outra meio amargo;
+		- Uma bandeija de uva verde sem semente (ah, bibi, bobo, sem sementinha... sim, SEM SEMENTE, PONTO!).
+	
+	### Ferramentas:
+		- Panela média para preparos quentes;
+		- Marinex de vidro para montar a sobremesa;
+		- Marinex de vidro para fazer banho maria (processo para derreter o chocolate);
+		- Peneira para finalizar.
+	
+	### Modo de preparo:
+		1. Começar juntando um leite condensado, com uma caixinha de creme de leite, as quatro colheres de leite em pó e usar os princípios de um brigadeiro, porém menos consistente, como se fosse um brigadeiro de colher;
+		
+		2. Depois, quebre as duas barras de chocolate em pedaços pequenos e coloque em banho maria, quando derreter, acrescente as duas caixinhas de creme de leite;
+		
+		3. Lave as uvas e corte-as ao meio;
+		
+		4. Será uma sobremesa de camadas, pegue o marinex onde será servida a sobremesa, a primeira camada será de brigadeiro de ninho (leite em pó fica feio o nome), as uvas com o lado exposto para baixo (é importante seguir esse passo pois o suco das uvas ficará em contato com a parte mais doce) e por último a camada de chocolate;
+
+		5. Para finalizar, polvilhe leite em pó sobre a camada de chocolate com auxílio de uma peneira.
+		
+	### Rendimento:
+		Em torno de 800g.
