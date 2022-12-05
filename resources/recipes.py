@@ -19,6 +19,13 @@ class Recipes(Resource):
     def get(self):
         return {'recipes' : [recipe.json([]) for recipe in RecipeModel.query.all()]}
 
+class MyRecipes(Resource):
+
+    @jwt_required()
+    def get(self):
+        return {'recipes' : [recipe.json([]) for recipe in RecipeModel.query.filter_by(user_id = get_jwt_identity()).all()]}
+
+
 class Recipe(Resource):
 
     def get(self, id):
@@ -54,9 +61,7 @@ class Recipe(Resource):
                 name = ingredient['name']
                 quantity = ingredient['quantity']
                 unit = ingredient['unit']
-                print('alo')
                 new_ingredient = IngredientModel(ingredient_id, name, quantity, unit, recipe_id)
-                print('dps')
                 new_ingredient.save_ingredient()
                 new_ingredients.append(new_ingredient)
 
